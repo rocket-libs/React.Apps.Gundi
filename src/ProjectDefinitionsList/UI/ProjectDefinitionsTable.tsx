@@ -5,7 +5,7 @@ import { IPotterChildComponentProps } from "react-potter/build/components/Potter
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import ProjectDefinitionsListLogic from "../Potter/ProjectDefinitionsListLogic";
 import ProjectDefinitionsListRepository from "../Potter/ProjectDefinitionsListRepository";
-import history from "history";
+import { RouteComponentProps } from "react-router-dom";
 
 interface IProps
   extends IPotterChildComponentProps<
@@ -18,7 +18,7 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
   ProjectDefinitionsListRepository,
   object,
   ProjectDefinitionsListLogic,
-  IProps
+  IProps & RouteComponentProps
 > {
   onRender(): ReactElement {
     return (
@@ -38,12 +38,8 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
                   <td>
                     <Button
                       onClick={() => {
-                        history.push({
-                          pathname: "/project-runner",
-                          state: {
-                            id: 7,
-                            color: "green",
-                          },
+                        this.props.history.push("/project-runner", {
+                          label: projectDefinition.label,
                         });
                       }}
                     >
