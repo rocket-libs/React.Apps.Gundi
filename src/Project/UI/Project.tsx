@@ -3,7 +3,6 @@ import ProjectLogic from "../Potter/ProjectLogic";
 import ProjectRepository from "../Potter/ProjectRepository";
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import { ReactElement } from "react";
-import { Tabs, Tab } from "react-bootstrap";
 import Page from "../../Layout/Page";
 import ProjectRunningResultPane from "../UI/ProjectRunningResultPane";
 
@@ -29,8 +28,6 @@ export default class Project extends PotterComponent<
   }
 
   onRender(): ReactElement {
-    debugger;
-    this.logic.runProjectAsync();
     return (
       <Page
         title={this.logic.projectDefinition.label}
@@ -38,23 +35,17 @@ export default class Project extends PotterComponent<
       >
         <div style={styles.header}>{this.logic.projectDefinition.label}</div>
         <hr />
-        <Tabs
-          defaultActiveKey="profile"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-        >
-          <Tab eventKey="home" title="Output">
-            <ProjectRunningResultPane
+        <ProjectRunningResultPane
               processRunningResult={this.repository.processRunningResult}
             />
-          </Tab>
-          <Tab eventKey="profile" title="Errors">
-            Nothing
-          </Tab>
-        </Tabs>
       </Page>
     );
   }
 
-  async onStartedAsync() {}
+  async onStartedAsync() {
+    setTimeout(async () => {
+      await this.logic.runProjectAsync();  
+    }, 2500);
+    
+  }
 }

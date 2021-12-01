@@ -5,6 +5,20 @@ interface IProps {
   processRunningResult: IProcessRunningResult[];
 }
 
+const writeLines = (lines?: string[]) : ReactElement => {
+  if(!lines) {
+    return <></>;
+  }else{
+    return (
+      <>
+        {lines.map((line, index) => (
+          <div key={index}>{line}</div>
+        ))}
+      </>
+    );
+  }
+}
+
 export default function ProjectRunningResultPane(props: IProps): ReactElement {
   return (
     <div>
@@ -14,14 +28,10 @@ export default function ProjectRunningResultPane(props: IProps): ReactElement {
             <div>{item.rawCommand}</div>
             <div>Duration: {item.duration}</div>
             <div>
-              {item.output.map((singleLine) => {
-                return <div>{singleLine}</div>;
-              })}
+              {writeLines(item.output)}
             </div>
             <div>
-              {item.errors.map((singleLine) => {
-                return <div>{singleLine}</div>;
-              })}
+              {writeLines(item.errors)}
             </div>
           </>
         );
