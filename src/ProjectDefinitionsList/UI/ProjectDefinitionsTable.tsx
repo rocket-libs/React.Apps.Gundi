@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { Table, Button } from "react-bootstrap";
 import { PotterChildComponent } from "react-potter";
 import { IPotterChildComponentProps } from "react-potter/build/components/PotterChildComponent";
+
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import ProjectDefinitionsListLogic from "../Potter/ProjectDefinitionsListLogic";
 import ProjectDefinitionsListRepository from "../Potter/ProjectDefinitionsListRepository";
@@ -37,8 +38,12 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
                   <td>
                     <Button
                       onClick={() => {
-                        const navigate = this.context.history;
-                        navigate.push("/project-runner");
+                        window.basicRouter.push({
+                          path: "/project",
+                          data: {
+                            label: projectDefinition.label,
+                          },
+                        });
                       }}
                     >
                       Run

@@ -29,7 +29,7 @@ export default class ProjectDefinitionsListLogic extends PotterLogicBase<
         );
       },
     });
-    debugger;
+
     if (succeeded) {
       this.potter.pushToRepository({ message: "Completed successfully" });
     } else {
