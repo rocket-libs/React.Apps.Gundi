@@ -5,6 +5,7 @@ import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition
 import { ReactElement } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import Page from "../../Layout/Page";
+import ProjectRunningResultPane from "../UI/ProjectRunningResultPane";
 
 const styles = {
   header: {
@@ -28,6 +29,8 @@ export default class Project extends PotterComponent<
   }
 
   onRender(): ReactElement {
+    debugger;
+    this.logic.runProjectAsync();
     return (
       <Page
         title={this.logic.projectDefinition.label}
@@ -41,7 +44,9 @@ export default class Project extends PotterComponent<
           className="mb-3"
         >
           <Tab eventKey="home" title="Output">
-            Empty
+            <ProjectRunningResultPane
+              processRunningResult={this.repository.processRunningResult}
+            />
           </Tab>
           <Tab eventKey="profile" title="Errors">
             Nothing
@@ -51,7 +56,5 @@ export default class Project extends PotterComponent<
     );
   }
 
-  async onStartedAsync() {
-    this.pushToRepository({ busy: true });
-  }
+  async onStartedAsync() {}
 }

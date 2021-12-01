@@ -40,9 +40,7 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
                       onClick={() => {
                         window.basicRouter.push({
                           path: "/project",
-                          data: {
-                            label: projectDefinition.label,
-                          },
+                          data: projectDefinition,
                         });
                       }}
                     >
