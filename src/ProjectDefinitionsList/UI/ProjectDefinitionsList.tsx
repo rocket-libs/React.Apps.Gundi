@@ -41,6 +41,10 @@ export default class ProjectDefinitionsList extends PotterComponent<
     );
   }
 
+  async componentDidMount() {
+    await this.logic.fetchProjectDefinitionsAsync();
+  }
+
   onRender(): ReactElement {
     return (
       <>
@@ -54,6 +58,6 @@ export default class ProjectDefinitionsList extends PotterComponent<
   }
 
   async onStartedAsync() {
-    await this.logic.fetchProjectDefinitionsAsync();
+    
   }
 }

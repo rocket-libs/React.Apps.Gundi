@@ -27,6 +27,10 @@ export default class Project extends PotterComponent<
     );
   }
 
+  async componentDidMount() {
+    await this.logic.runProjectAsync(); 
+  }
+
   onRender(): ReactElement {
     return (
       <Page
@@ -43,9 +47,7 @@ export default class Project extends PotterComponent<
   }
 
   async onStartedAsync() {
-    setTimeout(async () => {
-      await this.logic.runProjectAsync();  
-    }, 2500);
+   
     
   }
 }
