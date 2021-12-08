@@ -4,7 +4,6 @@ import ProjectRepository from "../Potter/ProjectRepository";
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import { ReactElement } from "react";
 import Page from "../../Layout/Page";
-import ProjectRunningResultPane from "../UI/ProjectRunningResultPane";
 
 const styles = {
   header: {
@@ -39,9 +38,11 @@ export default class Project extends PotterComponent<
       >
         <div style={styles.header}>{this.logic.projectDefinition.label}</div>
         <hr />
-        <ProjectRunningResultPane
-              processRunningResult={this.repository.processRunningResult}
-            />
+        <ol>
+          {this.repository.output.map((line, index) => {
+            return <li key={index}>{line}</li>;
+          })}
+        </ol>
       </Page>
     );
   }

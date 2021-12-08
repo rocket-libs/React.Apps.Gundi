@@ -1,0 +1,12 @@
+{
+    "Label": "Gundi Web UI",    
+    "BuildCommands":[
+        "rm -r ./build",
+        "yarn build"
+    ],
+    "DisabledStages":[
+        "CopyToStagingDirectory",
+        "PublishToRepository"
+    ],
+    "BuildOutputDirectory":""
+}

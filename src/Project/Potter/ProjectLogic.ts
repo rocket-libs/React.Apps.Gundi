@@ -4,6 +4,8 @@ import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition
 import ProjectDefinitionRunnerApiIntegrator from "../../ProjectRunning/Data/ProjectDefinitionRunnerApiIntegrator";
 import IProcessRunningResult from "../Data/IProcessRunningResult";
 import ProjectRepository from "./ProjectRepository";
+import ServerEventListener from "../../EventStreaming/ServerEventListener";
+import Settings from "../../Settings/Settings";
 export default class ProjectLogic extends PotterLogicBase<
   ProjectRepository,
   IProjectDefinition
@@ -17,12 +19,12 @@ export default class ProjectLogic extends PotterLogicBase<
 
 
   public async runProjectAsync() {
-    await this.runAsync({
-      fn: async () => {
-        try{
+      try{
           if(this.isRunning){
             return;
           }
+          this.potter.pushToRepository({busy:true});
+          this.handleEventListening();
           this.isRunning = true;
           const result =
           await new ProjectDefinitionRunnerApiIntegrator().runByIdAsync(
@@ -30,17 +32,29 @@ export default class ProjectLogic extends PotterLogicBase<
           );
           
         this.potter.pushToRepository({ processRunningResult: result });
-          }catch(e){
-            
-            console.error(e);
-            const result = {
-              errors: ["Error occured on server"],
-            } as IProcessRunningResult;
-            this.potter.pushToRepository({ processRunningResult: [result] });
-          }finally{
-            this.isRunning = false;
-          }
-      },
-    });
+      }catch(e){
+        console.error(e);
+        const result = {
+          errors: ["Error occured on server"],
+        } as IProcessRunningResult;
+        this.potter.pushToRepository({ processRunningResult: [result] });
+      }finally{
+        this.isRunning = false;
+      }
+  }
+
+  private handleEventListening(){
+    new ServerEventListener(
+      {
+        url: `${new Settings().host}api/v1/EventQueue/listen?projectId=${this.projectDefinition.projectId}`,
+        onData: (data: string) => {
+          this.context.repository.output.push(data);
+          this.potter.pushToRepository({});
+        },
+        onCompleted: () => {
+          this.potter.pushToRepository({busy:false});
+        }
+      }
+    )
   }
 }
