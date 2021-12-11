@@ -43,6 +43,13 @@ export default class ProjectLogic extends PotterLogicBase<
       }
   }
 
+  private scrollToBottom(){
+    const outputDiv = document.getElementById("gundi-output");
+    if(outputDiv){
+    outputDiv.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    }
+  }
+
   private handleEventListening(){
     new ServerEventListener(
       {
@@ -50,9 +57,11 @@ export default class ProjectLogic extends PotterLogicBase<
         onData: (data: string) => {
           this.context.repository.output.push(data);
           this.potter.pushToRepository({});
+          this.scrollToBottom();
         },
         onCompleted: () => {
           this.potter.pushToRepository({busy:false});
+          this.scrollToBottom();
         }
       }
     )

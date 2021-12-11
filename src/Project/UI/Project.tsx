@@ -38,11 +38,19 @@ export default class Project extends PotterComponent<
       >
         <div style={styles.header}>{this.logic.projectDefinition.label}</div>
         <hr />
+        <div id="gundi-output" style={{padding:"10px", margin:"4px", border:"solid 1px #DFDFDF"}}>
         <ol>
-          {this.repository.output.map((line, index) => {
-            return <li key={index}>{line}</li>;
+          {this.repository.output.map((chunk) => {
+            const lines = chunk.split("<br/>")
+            return lines.map((line, index) => {
+              if(line){
+              return <li key={index}>{line}</li>
+            }else{
+              return <></>
+            }});
           })}
         </ol>
+        </div>
       </Page>
     );
   }
