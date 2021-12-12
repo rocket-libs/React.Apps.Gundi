@@ -1,7 +1,7 @@
 {
     "Label": "Gundi Web UI",    
     "BuildCommands":[
-        "rm -r ./build",
+        "yarn install",
         "yarn build"
     ],
     "DisabledStages":[
