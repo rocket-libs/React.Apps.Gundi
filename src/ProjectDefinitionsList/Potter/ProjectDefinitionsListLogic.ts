@@ -13,13 +13,26 @@ export default class ProjectDefinitionsListLogic extends PotterLogicBase<
   public async fetchProjectDefinitionsAsync() {
     const projectDefinitions = await this.runAsync({
       fn: async () => {
-        return await new ProjectDefinitionsListApiIntegrator().getOptionallyPaged(
+        try{
+        const result = await new ProjectDefinitionsListApiIntegrator().getOptionallyPaged(
           this.dataAdapter
         );
+        this.context.repository.hasFetchedProjectDefinitions = true;
+        return result;
+        }
+        catch(e){
+          console.error(e);
+          setTimeout(async () => {
+            await this.fetchProjectDefinitionsAsync();
+          }, 2000);
+          return [];
+        }  
       },
     });
     this.potter.pushToRepository({ projectDefinitions: projectDefinitions });
   }
+
+  
 
   public async runProjectAsync(projectId: string) {
     const succeeded = await this.runAsync({

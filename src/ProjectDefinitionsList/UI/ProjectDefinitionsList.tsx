@@ -45,14 +45,23 @@ export default class ProjectDefinitionsList extends PotterComponent<
     await this.logic.fetchProjectDefinitionsAsync();
   }
 
+  componentToShow = () : ReactElement => {
+    if(this.repository.hasFetchedProjectDefinitions) {
+      return <ProjectDefinitionsTable
+      potter={this.potter}
+      key={this.getChildKeyFromObject(this.repository.projectDefinitions)}
+    />
+    }else
+    {
+        return <div style={{width:"100%",margin:"auto", border:"solid 1px #DFDFDF",textAlign:"center",paddingTop:"50px"}}>{this.repository.startingUpText}</div>
+    }
+  }
+
   onRender(): ReactElement {
     return (
       <>
         <BusyDialog show={this.repository.busy} />
-        <ProjectDefinitionsTable
-          potter={this.potter}
-          key={this.getChildKeyFromObject(this.repository.projectDefinitions)}
-        />
+        {this.componentToShow()}
       </>
     );
   }
