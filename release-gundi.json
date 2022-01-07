@@ -1,7 +1,7 @@
 {
     "Label": "Gundi Web UI",    
     "BuildCommands":[
-        "replace-in-file.sh -o environment: AppEnvironments = \"\\\"Development\\\"\"; -n environment: AppEnvironments = \"\\\"Production\\\"\"; -f ./src/Settings/Settings.ts",
+        "set \"REACT_APP_ENVIRONMENT=Production\"",
         "yarn install",
         "yarn build"
     ],
