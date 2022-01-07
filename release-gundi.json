@@ -1,7 +1,6 @@
 {
     "Label": "Gundi Web UI",    
     "BuildCommands":[
-        "set \"REACT_APP_ENVIRONMENT=Production\"",
         "yarn install",
         "yarn build"
     ],
