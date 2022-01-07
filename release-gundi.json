@@ -1,6 +1,7 @@
 {
     "Label": "Gundi Web UI",    
     "BuildCommands":[
+        "replace-in-file.sh -o environment: AppEnvironments = \\\"Development\\\"; -n environment: AppEnvironments = \\\"Production\\\"; ./src/Settings/Settings.ts",
         "yarn install",
         "yarn build"
     ],
