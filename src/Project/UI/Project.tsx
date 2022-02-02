@@ -33,7 +33,7 @@ export default class Project extends PotterComponent<
   onRender(): ReactElement {
     return (
       <Page
-        title={this.logic.projectDefinition.label}
+        title={`Gundi - ${this.logic.projectDefinition.label}`}
         busy={this.repository.busy}
       >
         <div style={styles.header}>{this.logic.projectDefinition.label}</div>
