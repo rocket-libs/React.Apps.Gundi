@@ -1,15 +1,16 @@
 import { PureComponent } from "react";
-import Dropdown from "../../Forms/Dropdown";
+import Dropdown from "../../Forms/Dropdown/Dropdown";
 import GundiForm from "../../Forms/GundiForm";
 import Textbox from "../../Forms/Textbox";
 import ApplicationFormLogic from "../ApplicationFormLogic";
+import IApplicationProjectDefinition from "../Data/IApplicationProjectDefinition";
 
 let logic: ApplicationFormLogic = new ApplicationFormLogic();
 
 export default class ApplicationForm extends PureComponent{
     
     async componentDidMount(){
-        logic.setRerender(this.forceUpdate.bind(this));
+        logic.setRerender(() => this.forceUpdate());
         await logic.fetchProjectDefinitionsAsync();
     }
     
@@ -22,7 +23,10 @@ export default class ApplicationForm extends PureComponent{
                 data={logic.repository.applicationProjectDefinitions} 
                 validationErrors={logic.repository.validationErrors}
                 selected={logic.model.applicationProjectDefinitions}
-                onSelectionChanged={logic.onProjectSelectionChanged}
+                onSelectionChanged={(data) => {
+                    logic.onProjectSelectionChanged(data as IApplicationProjectDefinition[])
+                }}
+
                 />
         </GundiForm>
     }

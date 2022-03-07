@@ -13,8 +13,9 @@ export default class ApplicationFormLogic extends ModuleStateManager<Application
     model: IApplication = {} as IApplication;
 
     private dataAdapter = new Databinder<IProjectDefinition>([], "get-all");
-    onProjectSelectionChanged (data: IApplicationProjectDefinition | IApplicationProjectDefinition[]) : void {
-        this.updateModel({ applicationProjectDefinitions: data as IApplicationProjectDefinition[]  });
+    onProjectSelectionChanged (data:  IApplicationProjectDefinition[]) : void {
+        
+        this.updateModel({ applicationProjectDefinitions: data  });
     }
     public async fetchProjectDefinitionsAsync() {
         const projectDefinitions = await new ProjectDefinitionsListApiIntegrator().getOptionallyPaged(
