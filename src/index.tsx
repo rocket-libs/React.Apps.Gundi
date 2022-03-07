@@ -6,25 +6,37 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProjectDefinitionsList from "./ProjectDefinitionsList/UI/ProjectDefinitionsList";
 import Project from "./Project/UI/Project";
+import Landing from "./Landing/UI/Landing";
+import NavigationSupport from "./Navigation/UI/NavigationSupport";
+import ApplicationForm from "./ApplicationForm/UI/ApplicationForm";
 
 
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <BasicRouter
-      routes={[
-        {
-          path: "/",
-          component: <ProjectDefinitionsList />,
-        },
-        {
-          path: "/project",
-          component: <Project />,
-        },
-      ]}
-      badRouteComponent={<div>Nothing here</div>}
-    />
+    <NavigationSupport>
+      <BasicRouter
+        routes={[
+          {
+            path: "/",
+            component: <Landing />,
+          },
+          {
+            path: "/project-definitions/list",
+            component: <ProjectDefinitionsList />,
+          },
+          {
+            path: "/project",
+            component: <Project />,
+          },{
+            path:"/applications/form",
+            component: <ApplicationForm />
+          }
+        ]}
+        badRouteComponent={<div>Nothing here</div>}
+      />
+    </NavigationSupport>
   </React.StrictMode>,
   document.getElementById("root")
 );
