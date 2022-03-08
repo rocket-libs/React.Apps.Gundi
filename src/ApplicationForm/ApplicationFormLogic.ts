@@ -17,16 +17,30 @@ export default class ApplicationFormLogic extends ModuleStateManager<Application
         
         this.updateModel({ applicationProjectDefinitions: data  });
     }
+
+    setApplicationDisplayLabel(displayLabel: string){
+        this.updateModel({ displayLabel });
+    }
+
     public async fetchProjectDefinitionsAsync() {
         const projectDefinitions = await new ProjectDefinitionsListApiIntegrator().getOptionallyPaged(
             this.dataAdapter
             );
-        this.updateRepository({ applicationProjectDefinitions: projectDefinitions.map(a => {
+        const applicationProjectDefinitions = projectDefinitions
+        .filter(a => a.repositoryDetail ? true : false)
+        .map(a => {
             return {
-                label: a.label,
+                label: a.repositoryDetail.branch + " − "+ a.label,
                 repositoryDetail: a.repositoryDetail,
                 tag: ""
             }
-        }) });
+        });
+        applicationProjectDefinitions.sort((a,b) => a.label.localeCompare(b.label));
+        this.updateRepository({ applicationProjectDefinitions:  applicationProjectDefinitions});
+    }
+
+    public async saveApplicationAsync(){
+        const application = this.model;
+        return Promise.resolve(application);
     }
 }
