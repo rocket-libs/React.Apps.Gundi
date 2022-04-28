@@ -4,6 +4,8 @@ import ProjectRepository from "../Potter/ProjectRepository";
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import { ReactElement } from "react";
 import Page from "../../Layout/Page";
+import Linkify from 'react-linkify';
+import { Button } from "react-bootstrap";
 
 const styles = {
   header: {
@@ -39,6 +41,7 @@ export default class Project extends PotterComponent<
         <div style={styles.header}>{this.logic.projectDefinition.label}</div>
         <hr />
         <div id="gundi-output" style={{padding:"10px", margin:"4px", border:"solid 1px #DFDFDF"}}>
+        <Linkify>
         <ol>
           {this.repository.output.map((chunk) => {
             const lines = chunk.split("<br/>")
@@ -50,6 +53,7 @@ export default class Project extends PotterComponent<
             }});
           })}
         </ol>
+        </Linkify>
         </div>
       </Page>
     );

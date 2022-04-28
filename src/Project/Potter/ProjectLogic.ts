@@ -43,6 +43,11 @@ export default class ProjectLogic extends PotterLogicBase<
       }
   }
 
+  public get hasOutput(): boolean {
+    return this.context.repository.output && 
+    this.context.repository.output.length > 0;
+  }
+
   private scrollToBottom(){
     const outputDiv = document.getElementById("gundi-output");
     if(outputDiv){
