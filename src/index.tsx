@@ -9,6 +9,7 @@ import Project from "./Project/UI/Project";
 import Landing from "./Landing/UI/Landing";
 import NavigationSupport from "./Navigation/UI/NavigationSupport";
 import ApplicationForm from "./ApplicationForm/UI/ApplicationForm";
+import ProjectDefinition from "./ProjectDefinitions/UI/ProjectDefinition";
 
 
 
@@ -32,6 +33,9 @@ ReactDOM.render(
           },{
             path:"/applications/form",
             component: <ApplicationForm />
+          },{
+            path:"/project-definitions/configure",
+            component: <ProjectDefinition />
           }
         ]}
         badRouteComponent={<div>Nothing here</div>}

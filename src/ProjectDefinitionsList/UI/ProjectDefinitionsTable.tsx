@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Table, Button, Tabs, Tab } from "react-bootstrap";
+import { Table, Button, Tabs, Tab, ButtonGroup } from "react-bootstrap";
 import { PotterChildComponent } from "react-potter";
 import { IPotterChildComponentProps } from "react-potter/build/components/PotterChildComponent";
 
@@ -62,6 +62,7 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
                   <td>{index + 1}</td>
                   <td>{projectDefinition.label}</td>
                   <td>
+                    <ButtonGroup>
                     <Button
                       onClick={() => {
                         window.basicRouter.push({
@@ -72,6 +73,15 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
                     >
                       Run
                     </Button>
+                    <Button variant="info" onClick={() => {
+                      window.basicRouter.push({
+                        path: "/project-definitions/configure",
+                        data: projectDefinition
+                      })
+                    }}>
+                      Configure
+                    </Button>
+                    </ButtonGroup>
                   </td>
                 </tr>
               );

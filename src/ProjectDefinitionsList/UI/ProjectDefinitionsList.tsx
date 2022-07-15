@@ -5,6 +5,7 @@ import ProjectDefinitionsListRepository from "../Potter/ProjectDefinitionsListRe
 import ProjectDefinitionsTable from "./ProjectDefinitionsTable";
 import BusyDialog from "../../Busy/BusyDialog";
 import { Modal, Button } from "react-bootstrap";
+import PageHeader from "../../PageHeader/UI/PageHeader";
 
 
 interface IProps {}
@@ -61,6 +62,7 @@ export default class ProjectDefinitionsList extends PotterComponent<
   onRender(): ReactElement {
     return (
       <>
+        <PageHeader title="Projects" />
         <BusyDialog show={this.repository.busy} />
         {this.componentToShow()}
       </>

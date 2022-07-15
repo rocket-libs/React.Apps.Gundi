@@ -5,7 +5,6 @@ import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition
 import { ReactElement } from "react";
 import Page from "../../Layout/Page";
 import Linkify from 'react-linkify';
-import { Button } from "react-bootstrap";
 
 const styles = {
   header: {

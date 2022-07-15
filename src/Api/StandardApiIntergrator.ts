@@ -41,4 +41,8 @@ export default abstract class StandardApiIntergrator<
   public async insertAsync(model: TModel): Promise<ValidationResponse<TModel>> {
     return await this.postAsync("insert", model);
   }
+
+  public async updateAsync(model: TModel) : Promise<ValidationResponse<TModel>>{
+    return await this.postAsync("update",model);
+  }
 }

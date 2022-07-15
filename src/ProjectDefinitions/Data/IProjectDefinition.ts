@@ -4,4 +4,5 @@ export default interface IProjectDefinition {
   projectId: string;
   projectPath: string;
   repositoryDetail: IRepositoryDetail;
+  keepSource: boolean;
 }

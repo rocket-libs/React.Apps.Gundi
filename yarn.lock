@@ -7652,10 +7652,10 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-module-state-manager@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/module-state-manager/-/module-state-manager-0.1.0.tgz#b497317979add7958296bf00dfdcdb1e81c0b0e7"
-  integrity sha512-6lWhvQTfNKzSrfjcBK2OzT2qyPaIBCVa6ArzRi70KpLbpTVGSluCXB+gfixuczsx6GeGRlcxz2DjFaS7MxRwwg==
+module-state-manager@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/module-state-manager/-/module-state-manager-0.2.1.tgz#cddfca39cb00e4bcf1fb0f567406ce3e1eda9ff0"
+  integrity sha512-Fqq/4vm5JYQyLlAGayAnfXBbPSgDYr5p0sjisGQWZ5NTI++AZKxK8pg7QlWBRAw2Sai7cQ7AydNHrTj0RHkBmg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
