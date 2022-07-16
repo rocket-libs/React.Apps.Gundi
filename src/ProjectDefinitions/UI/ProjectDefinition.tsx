@@ -9,10 +9,11 @@ import ProjectDefinitionsLogic from "../ProjectDefinitionsLogic";
 const logic = new ProjectDefinitionsLogic();
 export default class ProjectDefinition extends PureComponent{
     
-    componentDidMount(){
-        logic.model = GetRouteData<IProjectDefinition>()
-        logic.repository.savedModel = JSON.stringify(logic.model);
+    async componentDidMount(){
         logic.setRerender(() => this.forceUpdate());
+        logic.model = GetRouteData<IProjectDefinition>()
+        await logic.initializeAsync();
+        logic.repository.savedModel = JSON.stringify(logic.model);
         this.forceUpdate();
     }
 
