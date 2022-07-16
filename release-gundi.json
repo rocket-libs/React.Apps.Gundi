@@ -1,12 +1,17 @@
 {
-    "Label": "Gundi Web UI",    
-    "BuildCommands":[
-        "yarn install",
-        "yarn build"
-    ],
-    "DisabledStages":[
-        "CopyToStagingDirectory",
-        "PublishToRepository"
-    ],
-    "BuildOutputDirectory":""
+  "BuildCommands": [
+    "yarn install",
+    "yarn build"
+  ],
+  "BuildOutputDirectory": "./build",
+  "Id": "ae444759-f2d0-43a0-bbdc-1eaa00bfd386",
+  "Label": "Gundi Web UI",
+  "PublishUrl": "",
+  "DisabledStages": [
+    "CopyToStagingDirectory",
+    "PublishToRepository"
+  ],
+  "Branch": "master",
+  "OnSuccessPostBuildCommands": null,
+  "OnFailurePostBuildCommands": null
 }
