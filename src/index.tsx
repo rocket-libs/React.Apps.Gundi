@@ -10,9 +10,7 @@ import Landing from "./Landing/UI/Landing";
 import NavigationSupport from "./Navigation/UI/NavigationSupport";
 import ApplicationForm from "./ApplicationForm/UI/ApplicationForm";
 import ProjectDefinition from "./ProjectDefinitions/UI/ProjectDefinition";
-
-
-
+import ManageProjectForm from "./ManageProject/UI/ManageProjectForm";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -30,13 +28,19 @@ ReactDOM.render(
           {
             path: "/project",
             component: <Project />,
-          },{
-            path:"/applications/form",
-            component: <ApplicationForm />
-          },{
-            path:"/project-definitions/configure",
-            component: <ProjectDefinition />
-          }
+          },
+          {
+            path: "/applications/form",
+            component: <ApplicationForm />,
+          },
+          {
+            path: "/project-definitions/configure",
+            component: <ProjectDefinition />,
+          },
+          {
+            path: "/projects/manage",
+            component: <ManageProjectForm />,
+          },
         ]}
         badRouteComponent={<div>Nothing here</div>}
       />
