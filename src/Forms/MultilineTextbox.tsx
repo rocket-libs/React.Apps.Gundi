@@ -8,15 +8,7 @@ interface IProps extends IInputFieldSupport {
   value: string;
   description?: string;
 }
-export default class Textbox extends PureComponent<
-  Exclude<IProps, "children">
-> {
-  // render(){
-  //     return <InputField {...this.props}>
-  //         <input type={"text"} onChange={(e) => this.props.onChange(e.target.value)} defaultValue={this.props.value}/>
-  //         </InputField>
-  // }
-
+export default class MultilineTextbox extends PureComponent<IProps> {
   render() {
     return (
       <ErrorDisplayer
@@ -25,9 +17,9 @@ export default class Textbox extends PureComponent<
       >
         <Form.Group className="mb-3" controlId="label">
           <Form.Label>{this.props.displayLabel}</Form.Label>
-          <Form.Control
-            type="text"
-            title={this.props.displayLabel}
+          <textarea
+            className="form-control"
+            rows={5}
             placeholder={this.props.displayLabel}
             value={this.props.value}
             onChange={(e) => {

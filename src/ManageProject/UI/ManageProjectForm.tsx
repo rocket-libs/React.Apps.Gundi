@@ -1,4 +1,4 @@
-import { PureComponent } from "react";
+import { PureComponent, ReactNode } from "react";
 import { Button, Form } from "react-bootstrap";
 import GetRouteData from "../../BasicRouter/BasicRouterDataReader";
 import GundiForm from "../../Forms/GundiForm";
@@ -7,12 +7,119 @@ import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition
 import ManageProjectLogic from "../State/ManageProjectLogic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Textbox from "../../Forms/Textbox";
+import MultilineTextbox from "../../Forms/MultilineTextbox";
+import Dropdown from "../../Forms/Dropdown/Dropdown";
+import ReactSelectDropDownAdapter from "../../Forms/Dropdown/ReactSelect/ReactSelectDropDownAdapter";
+import IBuildStage from "../../BuildStages/Data/IBuildStage";
 
 const logic = new ManageProjectLogic();
 export default class ManageProjectForm extends PureComponent {
   componentDidMount(): void {
     logic.setRerender(() => this.forceUpdate());
-    logic.updateModel(GetRouteData<IProjectDefinition>());
+    logic.initializeModel(GetRouteData<IProjectDefinition>());
+  }
+
+  private get buildSection(): ReactNode {
+    return (
+      <>
+        <Textbox
+          id="Project.BuildOutputDirectory"
+          validationErrors={logic.repository.validationErrors}
+          displayLabel="Build Output Directory"
+          value={logic.model.project.buildOutputDirectory}
+          onChange={(value) =>
+            logic.updateModel({
+              project: {
+                ...logic.model.project,
+                buildOutputDirectory: value,
+              },
+            })
+          }
+          description={
+            "The path relative to the root of the repository to where build output shall be placed."
+          }
+        />
+        <MultilineTextbox
+          id="Project.BuildCommands"
+          validationErrors={logic.repository.validationErrors}
+          displayLabel="Build Commands"
+          value={logic.model.project.buildCommands.join("\n")}
+          onChange={(value) =>
+            logic.updateModel({
+              project: {
+                ...logic.model.project,
+                buildCommands: value.split("\n"),
+              },
+            })
+          }
+          description={
+            "The commands to run to build the project.  Each line is a separate command."
+          }
+        />
+        <Dropdown
+          id="Project.DisabledStages"
+          displayLabel={"Disabled Stages"}
+          data={logic.repository.buildStages}
+          validationErrors={logic.repository.validationErrors}
+          selected={logic.model.project.disabledStages}
+          onSelectionChanged={(data) => {
+            //logic.onProjectSelectionChanged(data as IApplicationProjectDefinition[])
+          }}
+          adapter={
+            new ReactSelectDropDownAdapter<IBuildStage>("displayLabel", {
+              isMulti: true,
+              closeMenuOnSelect: false,
+            })
+          }
+        />
+        <MultilineTextbox
+          id="Project.OnFailurePostBuildCommands"
+          validationErrors={logic.repository.validationErrors}
+          displayLabel="On Failure Post Build Commands"
+          value={logic.model.project.onFailurePostBuildCommands.join("\n")}
+          onChange={(value) =>
+            logic.updateModel({
+              project: {
+                ...logic.model.project,
+                onFailurePostBuildCommands: value.split("\n"),
+              },
+            })
+          }
+          description={
+            "The commands to run after a build failure.  Each line is a separate command."
+          }
+        />
+        <MultilineTextbox
+          id="Project.OnSuccessPostBuildCommands"
+          validationErrors={logic.repository.validationErrors}
+          displayLabel="On Success Post Build Commands"
+          value={logic.model.project.onSuccessPostBuildCommands.join("\n")}
+          onChange={(value) =>
+            logic.updateModel({
+              project: {
+                ...logic.model.project,
+                onSuccessPostBuildCommands: value.split("\n"),
+              },
+            })
+          }
+          description={
+            "The commands to run after a successful build.  Each line is a separate command."
+          }
+        />
+
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            type={"switch"}
+            label={`Delete Local Repository After Build Success`}
+            checked={!logic.model.keepSource}
+            onChange={() =>
+              logic.updateModel({ keepSource: !logic.model.keepSource })
+            }
+          />
+        </Form.Group>
+      </>
+    );
   }
 
   render() {
@@ -20,84 +127,89 @@ export default class ManageProjectForm extends PureComponent {
       <>
         <ToastContainer />
         <PageHeader title={`Manage Project: ${logic.projectLabel}`} />
-        <GundiForm
-          title={logic.projectLabel}
-          description="Manage the settings of your Gundi Project"
-          buttons={
-            <>
-              <Button
-                disabled={logic.canSave === true ? false : true}
-                onClick={() => {
-                  toast.promise(logic.saveAsync(), {
-                    pending: "Saving Project...",
-                    success: "Saved",
-                    error: "Error saving",
-                  });
-                }}
-              >
-                Save
-              </Button>{" "}
-            </>
-          }
-        >
-          <Form.Group className="mb-3" controlId="label">
-            <Form.Label>Label</Form.Label>
-            <Form.Control
-              type="text"
-              title={logic.model.label}
-              placeholder="Label"
+
+        {!logic.isInitialized ? (
+          <>Loading...</>
+        ) : (
+          <GundiForm
+            title={logic.projectLabel}
+            description="Manage the settings of your Gundi Project"
+            buttons={
+              <>
+                <Button
+                  disabled={logic.canSave === true ? false : true}
+                  onClick={() => {
+                    toast.promise(logic.saveAsync(), {
+                      pending: "Saving Project...",
+                      success: "Saved",
+                      error: "Error saving",
+                    });
+                  }}
+                >
+                  Save
+                </Button>{" "}
+              </>
+            }
+          >
+            <h3>Basic Information</h3>
+            <Textbox
+              id="ProjectDefinition.Label"
               value={logic.model.label}
-              onChange={(e) =>
-                logic.updateModel({
-                  label: e.target.value,
-                })
-              }
+              validationErrors={logic.repository.validationErrors}
+              onChange={(value) => logic.updateModel({ label: value })}
+              displayLabel={"Label"}
+              description="The name of the project as you'd wish it displayed."
             />
-            <Form.Text className="text-muted">
-              The name of the project as you'd wish it displayed.
-            </Form.Text>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="repositoryUrl">
-            <Form.Label>Repository Url</Form.Label>
-            <Form.Control
-              type="text"
-              title={logic.model.repositoryDetail.url}
-              placeholder="Repository Url"
+
+            <h3>Source Repository</h3>
+            <Textbox
+              id="RepositoryDetail.Url"
               value={logic.model.repositoryDetail.url}
-              onChange={(e) =>
+              validationErrors={logic.repository.validationErrors}
+              onChange={(value) =>
                 logic.updateModel({
                   repositoryDetail: {
                     ...logic.model.repositoryDetail,
-                    url: e.target.value,
+                    url: value,
                   },
                 })
               }
+              displayLabel={"Repository Url"}
+              description="The git repository url for the project."
             />
-            <Form.Text className="text-muted">
-              The git repository url for the project.
-            </Form.Text>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="repositoryBranch">
-            <Form.Label>Repository Branch</Form.Label>
-            <Form.Control
-              type="text"
-              title={logic.model.repositoryDetail.url}
-              placeholder="Repository Branch"
+            <Textbox
+              id="RepositoryDetail.Branch"
               value={logic.model.repositoryDetail.branch}
-              onChange={(e) =>
+              validationErrors={logic.repository.validationErrors}
+              onChange={(value) =>
                 logic.updateModel({
                   repositoryDetail: {
                     ...logic.model.repositoryDetail,
-                    branch: e.target.value,
+                    branch: value,
                   },
                 })
               }
+              displayLabel={"Repository Branch"}
+              description="The branch to build when repository is pulled"
             />
-            <Form.Text className="text-muted">
-              The git branch for the project.
-            </Form.Text>
-          </Form.Group>
-        </GundiForm>
+            <Textbox
+              id="ProjectDefinition.ProjectPath"
+              validationErrors={logic.repository.validationErrors}
+              displayLabel="Project Path"
+              value={logic.model.projectPath}
+              onChange={(value) =>
+                logic.updateModel({
+                  projectPath: value,
+                })
+              }
+              description={
+                "The path relative to the root of the repository to where the Gundi file is located."
+              }
+            />
+            <h3>Build</h3>
+            {this.buildSection}
+          </GundiForm>
+        )}
       </>
     );
   }

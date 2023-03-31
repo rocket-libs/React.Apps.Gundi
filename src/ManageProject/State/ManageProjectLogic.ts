@@ -1,4 +1,5 @@
 import ModuleStateManager from "module-state-manager";
+import IProject from "../../Project/Data/IProject";
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import IRepositoryDetail from "../../RepositoryDetail/Data/IRepositoryDetail";
 import ManageProjectApiCaller from "../Data/ManageProjectApiCaller";
@@ -8,7 +9,23 @@ export default class ManageProjectLogic extends ModuleStateManager<
   ManageProjectRepository,
   IProjectDefinition
 > {
-  repository: any;
+  repository: ManageProjectRepository = {
+    validationErrors: [],
+    buildStages: [
+      {
+        name: "RunBuildCommands",
+        displayLabel: "Run Build Commands",
+      },
+      {
+        name: "CopyToStagingDirectory",
+        displayLabel: "Copy To Staging Directory",
+      },
+      {
+        name: "PublishToRepository",
+        displayLabel: "Publish To Repository",
+      },
+    ],
+  } as ManageProjectRepository;
   model: IProjectDefinition = {
     repositoryDetail: {} as IRepositoryDetail,
   } as IProjectDefinition;
@@ -23,6 +40,28 @@ export default class ManageProjectLogic extends ModuleStateManager<
     if (this.inError) {
       throw new Error("Unable to save project");
     }
+  }
+
+  public get isInitialized(): boolean {
+    return this.model.project ? true : false;
+  }
+
+  public initializeModel(projectDefinition: IProjectDefinition) {
+    if (this.isInitialized) {
+      return;
+    }
+
+    if (!projectDefinition.project) {
+      projectDefinition.project = {
+        disabledStages: [],
+        buildOutputDirectory: "",
+        buildCommands: [],
+        onFailurePostBuildCommands: [],
+        onSuccessPostBuildCommands: [],
+        publishUrl: "",
+      } as IProject;
+    }
+    this.updateModel(projectDefinition);
   }
 
   public get inError(): boolean {

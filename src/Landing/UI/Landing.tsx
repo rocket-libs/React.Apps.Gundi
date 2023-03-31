@@ -26,7 +26,7 @@ export default class Landing extends PureComponent {
               Add New Project
             </Button>
           </div>
-          <div className="col12">
+          {/* <div className="col12">
             <Button
               onClick={() =>
                 window.basicRouter.push({ path: "/applications/form" })
@@ -34,7 +34,7 @@ export default class Landing extends PureComponent {
             >
               {logic.strings.addNewApplication}
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     );
