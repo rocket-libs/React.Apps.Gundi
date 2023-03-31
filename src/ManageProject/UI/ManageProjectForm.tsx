@@ -5,6 +5,8 @@ import GundiForm from "../../Forms/GundiForm";
 import PageHeader from "../../PageHeader/UI/PageHeader";
 import IProjectDefinition from "../../ProjectDefinitions/Data/IProjectDefinition";
 import ManageProjectLogic from "../State/ManageProjectLogic";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const logic = new ManageProjectLogic();
 export default class ManageProjectForm extends PureComponent {
@@ -15,14 +17,26 @@ export default class ManageProjectForm extends PureComponent {
 
   render() {
     return (
-      <div>
+      <>
+        <ToastContainer />
         <PageHeader title={`Manage Project: ${logic.projectLabel}`} />
         <GundiForm
           title={logic.projectLabel}
           description="Manage the settings of your Gundi Project"
           buttons={
             <>
-              <Button>Save</Button>{" "}
+              <Button
+                disabled={logic.canSave === true ? false : true}
+                onClick={() => {
+                  toast.promise(logic.saveAsync(), {
+                    pending: "Saving Project...",
+                    success: "Saved",
+                    error: "Error saving",
+                  });
+                }}
+              >
+                Save
+              </Button>{" "}
             </>
           }
         >
@@ -83,24 +97,8 @@ export default class ManageProjectForm extends PureComponent {
               The git branch for the project.
             </Form.Text>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="gundiFilePath">
-            <Form.Label>Gundi File Path</Form.Label>
-            <Form.Control
-              type="text"
-              title={logic.model.repositoryDetail.url}
-              placeholder="Gundi File Path"
-              value={logic.model.projectPath}
-              onChange={(e) =>
-                logic.updateModel({ projectPath: e.target.value })
-              }
-            />
-            <Form.Text className="text-muted">
-              Path to the gundi file in the repository, relative to the root of
-              the repository.
-            </Form.Text>
-          </Form.Group>
         </GundiForm>
-      </div>
+      </>
     );
   }
 }

@@ -1,32 +1,48 @@
 .flex-grid {
-    display: flex;
-  }
+  display: flex;
+}
+.flex-grid-responsive {
+  display: flex;
+  flex-wrap: wrap;
+}
+@media (max-width: 500px) {
   .flex-grid-responsive {
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
   }
-  @media (max-width: 500px) {
-    .flex-grid-responsive {
-      display: block;
-    }
-  }
-  .col1 {
-    flex: 1;
-  }
-  .col2 {
-    flex: 2;
-  }
-  .col3 {
-    flex: 3;
-  }
-  .col4 {
-    flex: 4;
-  }
-  .col5 {
-    flex: 5;
-  }
-  .col6 {
-    flex: 6;
-  }
-  
-  
+}
+.col1 {
+  flex: 1;
+}
+.col2 {
+  flex: 2;
+}
+.col3 {
+  flex: 3;
+}
+.col4 {
+  flex: 4;
+}
+.col5 {
+  flex: 5;
+}
+.col6 {
+  flex: 6;
+}
+.col7 {
+  flex: 6;
+}
+.col8 {
+  flex: 6;
+}
+.col9 {
+  flex: 6;
+}
+.col10 {
+  flex: 6;
+}
+.col11 {
+  flex: 6;
+}
+.col12 {
+  flex: 6;
+}
