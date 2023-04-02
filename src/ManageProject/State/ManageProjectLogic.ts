@@ -61,6 +61,7 @@ export default class ManageProjectLogic extends ModuleStateManager<
         publishUrl: "",
       } as IProject;
     }
+    debugger;
     this.updateModel(projectDefinition);
   }
 

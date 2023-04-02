@@ -1,3 +1,4 @@
+import IBuildCommand from "../../BuildCommands/Data/IBuildCommand";
 import IBuildStage from "../../BuildStages/Data/IBuildStage";
 
 export default interface IProject {
@@ -5,6 +6,6 @@ export default interface IProject {
   buildOutputDirectory: string;
   buildCommands: string[];
   disabledStages: IBuildStage[];
-  onFailurePostBuildCommands: string[];
-  onSuccessPostBuildCommands: string[];
+  onFailurePostBuildCommands: IBuildCommand[];
+  onSuccessPostBuildCommands: IBuildCommand[];
 }

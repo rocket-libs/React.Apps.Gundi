@@ -82,7 +82,7 @@ export default class ProjectDefinitionsTable extends PotterChildComponent<
                         variant="info"
                         onClick={() => {
                           window.basicRouter.push({
-                            path: "/project-definitions/configure",
+                            path: "/projects/manage",
                             data: projectDefinition,
                           });
                         }}

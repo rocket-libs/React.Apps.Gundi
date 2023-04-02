@@ -77,12 +77,18 @@ export default class ManageProjectForm extends PureComponent {
           id="Project.OnFailurePostBuildCommands"
           validationErrors={logic.repository.validationErrors}
           displayLabel="On Failure Post Build Commands"
-          value={logic.model.project.onFailurePostBuildCommands.join("\n")}
+          value={logic.model.project.onFailurePostBuildCommands
+            .map((buildCommand) => buildCommand.command)
+            .join("\n")}
           onChange={(value) =>
             logic.updateModel({
               project: {
                 ...logic.model.project,
-                onFailurePostBuildCommands: value.split("\n"),
+                onFailurePostBuildCommands: value.split("\n").map((x) => {
+                  return {
+                    command: x,
+                  };
+                }),
               },
             })
           }
@@ -94,12 +100,18 @@ export default class ManageProjectForm extends PureComponent {
           id="Project.OnSuccessPostBuildCommands"
           validationErrors={logic.repository.validationErrors}
           displayLabel="On Success Post Build Commands"
-          value={logic.model.project.onSuccessPostBuildCommands.join("\n")}
+          value={logic.model.project.onSuccessPostBuildCommands
+            .map((buildCommand) => buildCommand.command)
+            .join("\n")}
           onChange={(value) =>
             logic.updateModel({
               project: {
                 ...logic.model.project,
-                onSuccessPostBuildCommands: value.split("\n"),
+                onSuccessPostBuildCommands: value.split("\n").map((x) => {
+                  return {
+                    command: x,
+                  };
+                }),
               },
             })
           }
