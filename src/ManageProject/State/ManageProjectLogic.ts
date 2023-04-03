@@ -36,9 +36,16 @@ export default class ManageProjectLogic extends ModuleStateManager<
 
   public async saveAsync() {
     const saveResult = await new ManageProjectApiCaller().saveAsync(this.model);
-    this.updateRepository({ validationErrors: saveResult.validationErrors });
+
+    this.updateRepository({
+      validationErrors: saveResult.validationErrors ?? [],
+    });
     if (this.inError) {
       throw new Error("Unable to save project");
+    } else {
+      setTimeout(() => {
+        window.history.back();
+      }, 1000);
     }
   }
 
@@ -61,7 +68,7 @@ export default class ManageProjectLogic extends ModuleStateManager<
         publishUrl: "",
       } as IProject;
     }
-    debugger;
+
     this.updateModel(projectDefinition);
   }
 

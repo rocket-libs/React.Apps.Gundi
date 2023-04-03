@@ -15,7 +15,7 @@ const styles = {
 
 export default class ErrorDisplayer extends PureComponent<IProps> {
   private get firstError(): string {
-    if (this.props.validationErrors.length > 0) {
+    if (this.props.validationErrors && this.props.validationErrors.length > 0) {
       const firstError = this.props.validationErrors.find(
         (error) => error.key === this.props.id
       );
